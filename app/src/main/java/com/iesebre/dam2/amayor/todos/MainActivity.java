@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -80,15 +81,17 @@ public class MainActivity extends AppCompatActivity
 
          */
 
-  //      Type arrayTodoList = new TypeToken<TodoArrayList>() {}.getType();
-  //      TodoArrayList temp = gson.fromJson(todoList,arrayTodoList);
+        Type arrayTodoList = new TypeToken<TodoArrayList>() {}.getType();
+        this.gson = new Gson();
+        TodoArrayList temp = gson.fromJson(todoList,arrayTodoList);
 
+        if (temp != null) {
+            tasks = temp;
+        } else {
+            //Error TODO
+        }
 
-        //     if (temp != null) {
-        //        tasks = temp;
-        //  } else {
-        //      //Error TODO
-        //}
+        ListView todoslv = (ListView) findViewById(R.id.todolistview);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
