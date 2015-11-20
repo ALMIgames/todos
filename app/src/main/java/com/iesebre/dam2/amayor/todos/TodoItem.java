@@ -3,7 +3,7 @@ package com.iesebre.dam2.amayor.todos;
 import com.google.gson.Gson;
 
 /**
- * Created by pau on 13/11/15.
+ * Created by albert on 13/11/15.
  */
 public class TodoItem {
 

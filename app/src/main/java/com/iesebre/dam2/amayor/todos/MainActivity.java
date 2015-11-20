@@ -54,9 +54,10 @@ public class MainActivity extends AppCompatActivity
          */
 
         if (todoList == null) {
-            String initial_json = "[{\"name\":\"Comprar llet\", \"done\": true, \"priority\": 2},\n" +
-                    "         {\"name\":\"Comprar pa\", \"done\": true, \"priority\": 1},\n" +
-                    "         {\"name\":\"Fer exercici\", \"done\": false, \"priority\": 3'}]";
+            String initial_json =
+            "[{\"name\":\"Comprar llet\", \"done\": true, \"priority\": 2},\n" +
+            "{\"name\":\"Comprar pa\", \"done\": true, \"priority\": 1},\n" +
+            "{\"name\":\"Fer exercici\", \"done\": false, \"priority\": 3}]";
             SharedPreferences.Editor editor = todos.edit();
             editor.putString(TODO_LIST, initial_json);
             editor.commit();
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         [
          {"name":"Comprar llet", "done": true, "priority": 2},
          {"name":"Comprar pa", "done": true, "priority": 1},
-         {"name":"Fer exercici", "done": false, "priority": 3'}
+         {"name":"Fer exercici", "done": false, "priority": 3}
         ]
 
          */
@@ -93,7 +94,11 @@ public class MainActivity extends AppCompatActivity
 
         ListView todoslv = (ListView) findViewById(R.id.todolistview);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //adapter = new CustomListAdapter(this, tasks);
+        //todoslv.setAdapter(adapter);
+
+        Toolbar toolbar = (Toolbar)
+                findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
