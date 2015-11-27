@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TODO_LIST = "todo_list" ;
     private Gson gson;
     public TodoArrayList tasks;
+    private CustomListAdapter adapter;
 
     @Override
     protected void onDestroy() {
@@ -94,8 +95,9 @@ public class MainActivity extends AppCompatActivity
 
         ListView todoslv = (ListView) findViewById(R.id.todolistview);
 
-        //adapter = new CustomListAdapter(this, tasks);
-        //todoslv.setAdapter(adapter);
+        //We bind our arraylist of tasks to the adapter
+        adapter = new CustomListAdapter(this, tasks);
+        todoslv.setAdapter(adapter);
 
         Toolbar toolbar = (Toolbar)
                 findViewById(R.id.toolbar);

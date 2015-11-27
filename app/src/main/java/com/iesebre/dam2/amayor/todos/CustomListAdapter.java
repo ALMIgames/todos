@@ -40,8 +40,15 @@ public class CustomListAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        contentView = layoutInflater.inflate(R.id.todolistitem, null);
 
-        return contentView;
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(
+                    R.layout.listitem,
+                    null);
+        } else {
+
+        }
+
+        return convertView;
     }
 }
