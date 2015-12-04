@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.content.Intent;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,11 +36,36 @@ public class MainActivity extends AppCompatActivity
     private Gson gson;
     public TodoArrayList tasks;
     private CustomListAdapter adapter;
+    private String todoName;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+
+
+//        TodoArrayList temp = gson.fromJson(todoList,arrayTodoList);
+//        this.gson = new Gson();
+//        Type arrayTodoList = new TypeToken<TodoArrayList>() {}.getType();
+//
+//        if (temp != null) {
+//            tasks = temp;
+//        } else {
+//            //Error TODO
+//        }
+//
+//        String initial_json = "";//TODO tasks.toJson
+//        SharedPreferences.Editor editor = todos.edit();
+//        editor.putString(TODO_LIST, initial_json);
+//        editor.commit();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +85,19 @@ public class MainActivity extends AppCompatActivity
 
          */
 
-        if (todoList == null) {
-            String initial_json =
-            "[{\"name\":\"Despertar\", \"done\": true, \"priority\": 0},\n" +
-            "{\"name\":\"Dinar\", \"done\": true, \"priority\": 10},\n" +
-            "{\"name\":\"Migdiada\", \"done\": true, \"priority\": 1},\n" +
-            "{\"name\":\"Estudiar\", \"done\": false, \"priority\": 3}]";
-            SharedPreferences.Editor editor = todos.edit();
-            editor.putString(TODO_LIST, initial_json);
-            editor.commit();
-            todoList = todos.getString(TODO_LIST, null);
-        }
+
+//Gson (pista)
+//        if (todoList == null) {
+//            Type arrayTodoList = new TypeToken<TodoArrayList>() {}.getType();
+//            this.gson = new Gson();
+//            TodoArrayList temp = gson.fromJson(todoList, arrayTodoList);
+//
+//
+//            String initial_json = "";//TODO tasks.toJson
+//            SharedPreferences.Editor editor = todos.edit();
+//            editor.putString(TODO_LIST, initial_json);
+//            editor.commit();
+//        }
 
 
 
@@ -185,26 +216,52 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showAddTodoForm(View view){
-//        MaterialDialog dialog = new MatherialDialog.Builder(this).
-//                title("Afegir tasca").
-//                customView(R.layout.form_add_todo).
-//                negativeText("Cancel·lar").
-//                positiveText("Afegir").
-//                negativeColor(Color.parseColor("#2196F3")).
-//                positiveColor(Color.parseColor("#2196F3")).
-////                onPositive() {
-////        }
-//                build();
 
-        final TodoItem todoItem = new TodoItem();
-        todoItem.setName("test");
-        todoItem.setDone(true);
-        todoItem.setPriority(1);
+        todoName = "";
+        EditText todoNameText;
 
-        tasks.add(todoItem);
-        //tasks.remove(1);
-        adapter.notifyDataSetChanged();
+        MaterialDialog dialog = new MaterialDialog.Builder(this).
+                title("Afegir tasca").
+                customView(R.layout.form_add_todo, true).
+                negativeText("Cancelar").
+                positiveText("Acceptar").
+                negativeColor(Color.parseColor("#2196F3")).
+                positiveColor(Color.parseColor("#2196F3")).
+                onPositive(new MaterialDialog.SingleButtonCallback() {
 
 
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        final TodoItem todoItem = new TodoItem();
+                        todoItem.setName(todoName);
+                        todoItem.setDone(true);
+                        todoItem.setPriority(1);
+
+                        tasks.add(todoItem);
+                        //tasks.remove(1);
+                        adapter.notifyDataSetChanged();
+                    }
+                }).
+                build();
+                dialog.show();
+
+        todoNameText = (EditText) dialog.getCustomView().findViewById(R.id.todo_title);
+
+        todoNameText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                todoName = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }
