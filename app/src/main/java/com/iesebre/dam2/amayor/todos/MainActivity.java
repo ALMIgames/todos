@@ -1,11 +1,10 @@
 package com.iesebre.dam2.amayor.todos;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,7 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.content.Intent;
+import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -56,9 +58,10 @@ public class MainActivity extends AppCompatActivity
 
         if (todoList == null) {
             String initial_json =
-            "[{\"name\":\"Comprar llet\", \"done\": true, \"priority\": 2},\n" +
-            "{\"name\":\"Comprar pa\", \"done\": true, \"priority\": 1},\n" +
-            "{\"name\":\"Fer exercici\", \"done\": false, \"priority\": 3}]";
+            "[{\"name\":\"Despertar\", \"done\": true, \"priority\": 0},\n" +
+            "{\"name\":\"Dinar\", \"done\": true, \"priority\": 10},\n" +
+            "{\"name\":\"Migdiada\", \"done\": true, \"priority\": 1},\n" +
+            "{\"name\":\"Estudiar\", \"done\": false, \"priority\": 3}]";
             SharedPreferences.Editor editor = todos.edit();
             editor.putString(TODO_LIST, initial_json);
             editor.commit();
@@ -104,24 +107,24 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-                startActivity(intent);
-//                Snackbar.make(view, "Prova canviar el text", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener()   {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+//                startActivity(intent);
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//            }
+//        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -179,5 +182,29 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void showAddTodoForm(View view){
+//        MaterialDialog dialog = new MatherialDialog.Builder(this).
+//                title("Afegir tasca").
+//                customView(R.layout.form_add_todo).
+//                negativeText("Cancel·lar").
+//                positiveText("Afegir").
+//                negativeColor(Color.parseColor("#2196F3")).
+//                positiveColor(Color.parseColor("#2196F3")).
+////                onPositive() {
+////        }
+//                build();
+
+        final TodoItem todoItem = new TodoItem();
+        todoItem.setName("test");
+        todoItem.setDone(true);
+        todoItem.setPriority(1);
+
+        tasks.add(todoItem);
+        //tasks.remove(1);
+        adapter.notifyDataSetChanged();
+
+
     }
 }
