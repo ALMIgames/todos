@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     public TodoArrayList tasks;
     private CustomListAdapter adapter;
     private String todoName;
+    private boolean todoDone;
 
     @Override
     protected void onDestroy() {
@@ -218,7 +219,9 @@ public class MainActivity extends AppCompatActivity
     public void showAddTodoForm(View view){
 
         todoName = "";
+        todoDone = false;
         EditText todoNameText;
+        CheckBox todoDoneText;
 
         MaterialDialog dialog = new MaterialDialog.Builder(this).
                 title("Afegir tasca").
@@ -229,12 +232,11 @@ public class MainActivity extends AppCompatActivity
                 positiveColor(Color.parseColor("#2196F3")).
                 onPositive(new MaterialDialog.SingleButtonCallback() {
 
-
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
                         final TodoItem todoItem = new TodoItem();
                         todoItem.setName(todoName);
-                        todoItem.setDone(true);
+                        todoItem.setDone(todoDone);
                         todoItem.setPriority(1);
 
                         tasks.add(todoItem);
@@ -263,5 +265,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        todoDoneText = (boolean) dialog.getCustomView().findViewById(R.id.todo_title);
     }
 }
