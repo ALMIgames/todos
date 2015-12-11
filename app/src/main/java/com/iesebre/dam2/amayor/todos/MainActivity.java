@@ -1,5 +1,6 @@
 package com.iesebre.dam2.amayor.todos;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity
     private CustomListAdapter adapter;
     private String todoName;
     private boolean todoDone;
+    private int todoPri;
+    private boolean checkint;
 
     @Override
     protected void onDestroy() {
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("TAG_PROVA", todoList);
         Log.d("TAG_PROVA", "****************************************************");
 
-        Toast.makeText(this, todoList, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, todoList, Toast.LENGTH_LONG).show();
 
         /*
         [
@@ -218,10 +221,13 @@ public class MainActivity extends AppCompatActivity
 
     public void showAddTodoForm(View view){
 
+        checkint = true;
         todoName = "";
+        todoPri = 0;
         todoDone = false;
         EditText todoNameText;
-        CheckBox todoDoneText;
+        EditText todoPriText;
+        //CheckBox todoDoneText;
 
         MaterialDialog dialog = new MaterialDialog.Builder(this).
                 title("Afegir tasca").
@@ -237,11 +243,14 @@ public class MainActivity extends AppCompatActivity
                         final TodoItem todoItem = new TodoItem();
                         todoItem.setName(todoName);
                         todoItem.setDone(todoDone);
-                        todoItem.setPriority(1);
+                        todoItem.setPriority(todoPri);
 
                         tasks.add(todoItem);
                         //tasks.remove(1);
                         adapter.notifyDataSetChanged();
+                        if (!checkint) {
+                            toast( "Error al definir la prioritat. Posat a 0 per defecte." );
+                        }
                     }
                 }).
                 build();
@@ -266,6 +275,39 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        todoDoneText = (boolean) dialog.getCustomView().findViewById(R.id.todo_title);
+        todoPriText = (EditText) dialog.getCustomView().findViewById(R.id.todo_priority);
+
+        todoPriText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence p, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence p, int start, int before, int count) {
+                try {
+                    todoPri = Integer.parseInt(p.toString());
+                    checkint = true;
+                } catch (NumberFormatException nfe) {
+                    toast( "Si us plau, introdueix un número enter." );
+                    checkint = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable p) {
+
+            }
+        });
+        //todoDoneText = (boolean) dialog.getCustomView().findViewById(R.id.todo_title);
+    }
+
+    public void toast(String msg){
+        Context context = getApplicationContext();
+        CharSequence text = msg;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }
