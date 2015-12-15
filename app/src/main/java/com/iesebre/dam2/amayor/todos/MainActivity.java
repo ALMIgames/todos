@@ -302,6 +302,12 @@ public class MainActivity extends AppCompatActivity
         //todoDoneText = (boolean) dialog.getCustomView().findViewById(R.id.todo_title);
     }
 
+    public void showDeleteTodoForm(View view) {
+        toast( "Deleted" );
+    }
+
+
+
     public void toast(String msg){
         Context context = getApplicationContext();
         CharSequence text = msg;

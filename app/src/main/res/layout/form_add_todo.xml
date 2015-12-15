@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/addtododialog"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    >
+
+
+    <EditText
+        android:id="@+id/todo_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:inputType="textCapSentences"
+        android:maxLines="1"
+        android:textSize="25sp"
+        android:hint="Nom tasca"
+        />
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/task_priority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/task_priority_red"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+
+            android:drawableStart="@drawable/radio_alta"
+            android:drawableLeft="@drawable/radio_alta"
+            android:drawablePadding="6dp"
+            android:button="@null"
+            android:background="@android:color/transparent"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            />
+
+        <RadioButton
+            android:id="@+id/task_priority_green"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+
+            android:drawableStart="@drawable/radio_baixa"
+            android:drawableLeft="@drawable/radio_baixa"
+            android:drawablePadding="6dp"
+            android:button="@null"
+            android:background="@android:color/transparent"
+
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/done"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:maxLines="1"
+        android:textSize="25sp"
+        android:hint="Done"
+        />
+</LinearLayout>
