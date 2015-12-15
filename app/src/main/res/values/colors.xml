@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#7CFC00</color>
+
+    <!--afegeixo estes linies per als colors dels radio buttons-->
+    <color name="buttonRed">#F33446</color>
+    <color name="buttonBlue">#2196F3</color>
+    <color name="buttonGreen">#4CAF50</color>
+
 </resources>

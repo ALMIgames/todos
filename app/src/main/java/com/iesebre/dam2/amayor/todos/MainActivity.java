@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity
 
         MaterialDialog dialog = new MaterialDialog.Builder(this).
                 title("Afegir tasca").
-                customView(R.layout.form_add_todo, true).
+                customView(R.layout.form_todo_add, true).
                 negativeText("Cancelar").
                 positiveText("Acceptar").
                 negativeColor(Color.parseColor("#2196F3")).
