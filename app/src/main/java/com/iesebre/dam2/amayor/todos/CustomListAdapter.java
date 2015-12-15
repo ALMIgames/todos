@@ -12,15 +12,15 @@ import java.util.ArrayList;
 /**
  * Created by albert on 20/11/15.
  */
-public class CustomListAdapter extends BaseAdapter{
+public class CustomListAdapter extends BaseAdapter {
 
     private final Context context;
     private final ArrayList<TodoItem> list;
     private final LayoutInflater layoutInflater;
 
     public CustomListAdapter(Context context, ArrayList listData) {
-        this.context=context;
-        this.list=listData;
+        this.context = context;
+        this.list = listData;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -50,11 +50,12 @@ public class CustomListAdapter extends BaseAdapter{
 
         }
 
-        TextView tv = (TextView) convertView.findViewById(R.id.todolistitemtext);
+        TextView tv  = (TextView) convertView.findViewById(R.id.todolistitemtext);
 
-        tv.setText(list.get(position).getName()
-                + " p: " + list.get(position).getPriority() +
-                " done: " + list.get(position).isDone());
+        //tv.setText("PROVA");
+        tv.setText(list.get(position).getText()
+                + " p: " + list.get(position).getColor() +
+                " done: " + list.get(position).getChecked());
 
         return convertView;
     }

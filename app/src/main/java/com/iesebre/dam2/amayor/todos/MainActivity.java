@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.content.Intent;
 import android.view.View;
@@ -41,6 +43,13 @@ public class MainActivity extends AppCompatActivity
     private boolean todoDone;
     private int todoPri;
     private boolean checkint;
+    TodoItem ti_temp;
+    TodoItem.Color checkedColor;
+    String taskTitle;
+
+    View positiveAction;
+
+    boolean undoIsVisible = false;
 
     @Override
     protected void onDestroy() {
@@ -106,9 +115,9 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        Log.d("TAG_PROVA","****************************************************");
-        Log.d("TAG_PROVA", todoList);
-        Log.d("TAG_PROVA", "****************************************************");
+//        Log.d("TAG_PROVA","****************************************************");
+//        Log.d("TAG_PROVA", todoList);
+//        Log.d("TAG_PROVA", "****************************************************");
 
         //Toast.makeText(this, todoList, Toast.LENGTH_LONG).show();
 
@@ -223,11 +232,10 @@ public class MainActivity extends AppCompatActivity
 
         checkint = true;
         todoName = "";
-        todoPri = 0;
+        checkedColor = TodoItem.Color.BLUE;
         todoDone = false;
         EditText todoNameText;
-        EditText todoPriText;
-        //CheckBox todoDoneText;
+        RadioGroup todoPriority;
 
         MaterialDialog dialog = new MaterialDialog.Builder(this).
                 title("Afegir tasca").
@@ -241,13 +249,14 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
                         final TodoItem todoItem = new TodoItem();
-                        todoItem.setName(todoName);
-                        todoItem.setDone(todoDone);
-                        todoItem.setPriority(todoPri);
+                        todoItem.setText(todoName);
+                        todoItem.setColor(checkedColor);
+                        todoItem.setChecked(false);
 
                         tasks.add(todoItem);
-                        //tasks.remove(1);
                         adapter.notifyDataSetChanged();
+
+                        //View v = findViewByIndex(tasks.indexOf(todoItem), (ListView) findViewById(R.id.listview));
                         if (!checkint) {
                             toast( "Error al definir la prioritat. Posat a 0 per defecte." );
                         }
@@ -255,6 +264,9 @@ public class MainActivity extends AppCompatActivity
                 }).
                 build();
                 dialog.show();
+
+
+        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
 
         todoNameText = (EditText) dialog.getCustomView().findViewById(R.id.todo_title);
 
@@ -275,38 +287,54 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        todoPriText = (EditText) dialog.getCustomView().findViewById(R.id.todo_priority);
+        todoPriority = (RadioGroup) dialog.getCustomView().findViewById(R.id.todo_priority);
+        todoPriority.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup taskPriority, int checkedId) {
 
-        todoPriText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence p, int start, int count, int after) {
+                RadioButton checkedRadioButton = (RadioButton) taskPriority.findViewById(checkedId);
 
-            }
+                if (checkedRadioButton.isChecked()) {
 
-            @Override
-            public void onTextChanged(CharSequence p, int start, int before, int count) {
-                try {
-                    todoPri = Integer.parseInt(p.toString());
-                    checkint = true;
-                } catch (NumberFormatException nfe) {
-                    toast( "Si us plau, introdueix un número enter." );
-                    checkint = false;
+                    if (checkedId == R.id.prioritat_alta) {
+                        checkedColor = TodoItem.Color.RED;
+                    } else if (checkedId == R.id.prioritat_mitja) {
+                        checkedColor = TodoItem.Color.BLUE;
+                    } else if (checkedId == R.id.prioritat_baixa) {
+                        checkedColor = TodoItem.Color.GREEN;
+                    } else {
+                        checkedColor = null;
+                    }
+
+                    positiveAction.setEnabled(taskTitle.trim().length() > 0 && checkedColor != null);
                 }
             }
 
-            @Override
-            public void afterTextChanged(Editable p) {
-
-            }
+//        todoPriText = (EditText) dialog.getCustomView().findViewById(R.id.todo_priority);
+//
+//        todoPriText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence p, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence p, int start, int before, int count) {
+//                try {
+//                    todoPri = Integer.parseInt(p.toString());
+//                    checkint = true;
+//                } catch (NumberFormatException nfe) {
+//                    toast( "Si us plau, introdueix un número enter." );
+//                    checkint = false;
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable p) {
+//
+//            }
         });
         //todoDoneText = (boolean) dialog.getCustomView().findViewById(R.id.todo_title);
     }
-
-    public void showDeleteTodoForm(View view) {
-        toast( "Deleted" );
-    }
-
-
 
     public void toast(String msg){
         Context context = getApplicationContext();

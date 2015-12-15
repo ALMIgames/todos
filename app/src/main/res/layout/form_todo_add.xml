@@ -27,7 +27,7 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/todo_priority_red"
+            android:id="@+id/prioritat_alta"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
 
@@ -42,7 +42,7 @@
             />
 
         <RadioButton
-            android:id="@+id/todo_priority_green"
+            android:id="@+id/prioritat_mitja"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
 
@@ -57,7 +57,7 @@
             />
 
         <RadioButton
-            android:id="@+id/todo_priority_blue"
+            android:id="@+id/prioritat_baixa"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
 

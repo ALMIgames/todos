@@ -7,53 +7,66 @@ import com.google.gson.Gson;
  */
 public class TodoItem {
 
-    private String name;
-    private boolean done;
-    private int priority;
+        public static enum Color {
+            RED, BLUE, GREEN;
+        }
 
-    public TodoItem() {
-        this.name = "";
-        this.done = false;
-        this.priority = 1;
-    }
+        private String text;
+        private Color color;
+        private boolean checked;
 
-    public TodoItem(String name, boolean done, int priority) {
-        this.name = name;
-        this.done = done;
-        this.priority = priority;
-    }
+        public TodoItem(){
+            this.text = "";
+            this.color = Color.BLUE;
+            this.checked = false;
+        }
 
-    public String getName() {
-        return name;
-    }
+        public TodoItem(TodoItem ti){
+            this.text = ti.getText();
+            this.color = ti.getColor();
+            this.checked = ti.getChecked();
+        }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        static public TodoItem create(String serializedData) {
+            Gson gson = new Gson();
+            return gson.fromJson(serializedData, TodoItem.class);
+        }
 
-    public boolean isDone() {
-        return done;
-    }
+        public String serialize() {
+            Gson gson = new Gson();
+            return gson.toJson(this);
+        }
 
-    public void setDone(boolean done) {
-        this.done = done;
-    }
+        public String getText() {
+            return text;
+        }
 
-    public int getPriority() {
-        return priority;
-    }
+        public void setText(String text) {
+            this.text = text;
+        }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
+        public Color getColor() {
+            return color;
+        }
 
-    @Override
-    public String toString() {
-        return "{ name: " + name + ", done: " + done + ", priority: " + priority +" }";
-    }
+        public void setColor(Color color) {
+            this.color = color;
+        }
 
-    public String serialize() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+        public boolean getChecked(){
+            return checked;
+        }
+
+        public void setChecked(boolean c){
+            checked = c;
+        }
+
+        public void toggleChecked(){
+            checked = !checked;
+        }
+
+        @Override
+        public String toString() {
+            return "[ text: " + text + ",  color: " + color + ", checked: " + checked + "]";
+        }
 }
